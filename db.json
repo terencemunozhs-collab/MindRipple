@@ -1,0 +1,82 @@
+{
+  "posts": [
+    {
+      "id": "1",
+      "title": "The Art of Deep Focus in a Distracted World",
+      "author": "Amara Singh",
+      "date": "2025-02-10",
+      "category": "Productivity",
+      "excerpt": "In an age of constant notifications, finding true focus has become a superpower worth developing.",
+      "content": "Full article body text here — minimum 3 paragraphs...",
+      "coverImage": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800",
+      "readTime": 5
+    },
+    {
+      "id": "2",
+      "title": "Why Journaling Changed How I Think",
+      "author": "Leo Marchetti",
+      "date": "2025-02-18",
+      "category": "Mindset",
+      "excerpt": "Writing daily didn't just help me remember things — it rewired how I process the world.",
+      "content": "Full article body text here — minimum 3 paragraphs...",
+      "coverImage": "https://images.unsplash.com/photo-1455390582262-044cdead277a?w=800",
+      "readTime": 4
+    },
+    {
+      "id": "3",
+      "title": "Learning in Public: A Beginner's Guide",
+      "author": "Priya Chen",
+      "date": "2025-03-01",
+      "category": "Learning",
+      "excerpt": "Sharing your progress openly feels terrifying at first — and then becomes the best decision you ever made.",
+      "content": "Full article body text here — minimum 3 paragraphs...",
+      "coverImage": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800",
+      "readTime": 6
+    },
+    {
+      "id": "4",
+      "title": "Building Habits That Actually Stick",
+      "author": "Amara Singh",
+      "date": "2025-03-08",
+      "category": "Productivity",
+      "excerpt": "Most habit advice skips the hard part: what to do when you inevitably break the streak.",
+      "content": "Full article body text here — minimum 3 paragraphs...",
+      "coverImage": "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800",
+      "readTime": 7
+    },
+    {
+      "id": "5",
+      "title": "The Quiet Power of Saying No",
+      "author": "Leo Marchetti",
+      "date": "2025-03-14",
+      "category": "Mindset",
+      "excerpt": "Every yes to something unimportant is a no to something that matters deeply to you.",
+      "content": "Full article body text here — minimum 3 paragraphs...",
+      "coverImage": "https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800",
+      "readTime": 3
+    },
+    {
+      "id": "6",
+      "title": "How Curiosity Beats Talent Every Time",
+      "author": "Priya Chen",
+      "date": "2025-03-15",
+      "category": "Learning",
+      "excerpt": "Talented people stop growing when they stop being curious. Curious people never stop growing.",
+      "content": "Full article body text here — minimum 3 paragraphs...",
+      "coverImage": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800",
+      "readTime": 5
+    },
+    {
+      "id": "1773838323758",
+      "title": "etchas",
+      "author": "asdasd",
+      "category": "Mindset",
+      "coverImage": "https://t4.ftcdn.net/jpg/05/79/51/51/360_F_579515100_FBB4hLu4hFC8oMW3V1N5ayz8sEHra2Ka.jpg",
+      "excerpt": "asd",
+      "content": "asdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsadasdsadsad",
+      "readTime": 5,
+      "date": "2026-03-18"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

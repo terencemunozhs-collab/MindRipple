@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:wght@400;600;700&display=swap');
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --font-sans: "Inter", sans-serif;
+  --font-serif: "Lora", Georgia, serif;
+  --color-indigo-500: #6366f1;
+  --color-indigo-600: #4F46E5;
+  --color-indigo-700: #4338ca;
+  --color-teal-500: #14b8a6;
+  --color-teal-600: #0D9488;
+  --color-slate-800: #1E293B;
+  --color-gray-50: #F9FAFB;
+  --color-gray-500: #64748B;
+  --color-red-500: #EF4444;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-gray-50);
+    color: var(--color-slate-800);
+    font-family: var(--font-sans);
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-serif);
+  }
+}
