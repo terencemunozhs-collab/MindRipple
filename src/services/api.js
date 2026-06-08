@@ -1,47 +1,60 @@
-/**
- * API service layer using LocalStorage.
- * Replaces json-server for static deployment on Vercel.
- */
+import { initializeApp } from "firebase/app";
+import { getFirestore, collection, getDocs, getDoc, doc, addDoc, updateDoc, deleteDoc, orderBy, query, setDoc } from "firebase/firestore";
 import initialData from '../../db.json';
 
-const STORAGE_KEY = 'mindripple_posts';
+const firebaseConfig = {
+  apiKey: "AIzaSyAVzXDwnbzz5hZBygfBATihkpsMmMEmw6E",
+  authDomain: "mindripple-7f231.firebaseapp.com",
+  projectId: "mindripple-7f231",
+  storageBucket: "mindripple-7f231.firebasestorage.app",
+  messagingSenderId: "95465625608",
+  appId: "1:95465625608:web:f53059bc1faaa8ccb259bd"
+};
 
-// Initialize local storage if empty
-if (!localStorage.getItem(STORAGE_KEY)) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(initialData.posts || []));
-}
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const postsCollection = collection(db, "posts");
 
-// Helper to simulate network delay
-const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-
-function getPostsFromStorage() {
-  const data = localStorage.getItem(STORAGE_KEY);
-  return data ? JSON.parse(data) : [];
-}
-
-function savePostsToStorage(posts) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
+// Auto-seed database if empty
+let initialized = false;
+async function initializeDbIfNeeded() {
+  if (initialized) return;
+  initialized = true;
+  try {
+    const snapshot = await getDocs(postsCollection);
+    if (snapshot.empty && initialData.posts && initialData.posts.length > 0) {
+      console.log('Seeding initial data into Firestore...');
+      for (const post of initialData.posts) {
+        // We use setDoc to specify the document ID explicitly
+        await setDoc(doc(db, "posts", post.id), post);
+      }
+      console.log('Database seeded successfully.');
+    }
+  } catch (e) {
+    console.error('Failed to seed database:', e);
+  }
 }
 
 export async function getAllPosts() {
-  await delay(300);
+  await initializeDbIfNeeded();
   try {
-    const posts = getPostsFromStorage();
-    // Sort by date descending to mimic ?_sort=-date
-    return posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    const q = query(postsCollection, orderBy("date", "desc"));
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
   } catch (error) {
     console.error('Error fetching posts:', error);
+    // If indexing or permissions fail, fallback to local fetch
     throw error;
   }
 }
 
 export async function getPostById(id) {
-  await delay(300);
   try {
-    const posts = getPostsFromStorage();
-    const post = posts.find(p => p.id === String(id));
-    if (!post) throw new Error(`Post not found`);
-    return post;
+    const docRef = doc(db, "posts", id);
+    const docSnap = await getDoc(docRef);
+    if (!docSnap.exists()) throw new Error(`Post not found`);
+    return { id: docSnap.id, ...docSnap.data() };
   } catch (error) {
     console.error(`Error fetching post ${id}:`, error);
     throw error;
@@ -49,17 +62,13 @@ export async function getPostById(id) {
 }
 
 export async function createPost(data) {
-  await delay(300);
   try {
-    const posts = getPostsFromStorage();
     const newPost = {
       ...data,
-      id: Date.now().toString(),
       date: new Date().toISOString().split('T')[0],
     };
-    posts.push(newPost);
-    savePostsToStorage(posts);
-    return newPost;
+    const docRef = await addDoc(postsCollection, newPost);
+    return { id: docRef.id, ...newPost };
   } catch (error) {
     console.error('Error creating post:', error);
     throw error;
@@ -67,15 +76,13 @@ export async function createPost(data) {
 }
 
 export async function updatePost(id, data) {
-  await delay(300);
   try {
-    const posts = getPostsFromStorage();
-    const index = posts.findIndex(p => p.id === String(id));
-    if (index === -1) throw new Error(`Post not found`);
+    const docRef = doc(db, "posts", id);
+    await updateDoc(docRef, data);
     
-    posts[index] = { ...posts[index], ...data };
-    savePostsToStorage(posts);
-    return posts[index];
+    // Fetch the updated post to return it
+    const docSnap = await getDoc(docRef);
+    return { id: docSnap.id, ...docSnap.data() };
   } catch (error) {
     console.error(`Error updating post ${id}:`, error);
     throw error;
@@ -83,11 +90,9 @@ export async function updatePost(id, data) {
 }
 
 export async function deletePost(id) {
-  await delay(300);
   try {
-    const posts = getPostsFromStorage();
-    const filteredPosts = posts.filter(p => p.id !== String(id));
-    savePostsToStorage(filteredPosts);
+    const docRef = doc(db, "posts", id);
+    await deleteDoc(docRef);
     return true;
   } catch (error) {
     console.error(`Error deleting post ${id}:`, error);
